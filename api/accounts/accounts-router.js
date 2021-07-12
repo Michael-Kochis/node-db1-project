@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const accounts = require('./accounts-model');
+const {checkAccountId, checkAccountNameUnique, checkAccountPayload} = require('./accounts-middleware');
 
 router.get('/', (req, res, next) => {
   // DO YOUR MAGIC
@@ -9,7 +10,7 @@ router.get('/', (req, res, next) => {
     }).catch(next);
 })
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', checkAccountId, (req, res, next) => {
   // DO YOUR MAGIC
   const { id } = req.params;
 
@@ -19,7 +20,7 @@ router.get('/:id', (req, res, next) => {
     }).catch(next);
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', [checkAccountNameUnique, checkAccountPayload], (req, res, next) => {
   // DO YOUR MAGIC
   const neoAccount = req.body;
 
@@ -29,7 +30,7 @@ router.post('/', (req, res, next) => {
     }).catch(next);
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', [checkAccountId, checkAccountNameUnique, checkAccountPayload], (req, res, next) => {
   // DO YOUR MAGIC
   const { id } = req.params;
   const changes = req.body;
@@ -40,7 +41,7 @@ router.put('/:id', (req, res, next) => {
     }).catch(next);
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', checkAccountId, (req, res, next) => {
   // DO YOUR MAGIC
   const { id } = req.params;
 
