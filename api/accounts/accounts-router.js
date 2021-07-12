@@ -20,7 +20,7 @@ router.get('/:id', checkAccountId, (req, res, next) => {
     }).catch(next);
 })
 
-router.post('/', [checkAccountNameUnique, checkAccountPayload], (req, res, next) => {
+router.post('/', [checkAccountPayload, checkAccountNameUnique], (req, res, next) => {
   // DO YOUR MAGIC
   const neoAccount = req.body;
 
@@ -30,14 +30,14 @@ router.post('/', [checkAccountNameUnique, checkAccountPayload], (req, res, next)
     }).catch(next);
 })
 
-router.put('/:id', [checkAccountId, checkAccountNameUnique, checkAccountPayload], (req, res, next) => {
+router.put('/:id', [checkAccountId, checkAccountPayload, checkAccountNameUnique], (req, res, next) => {
   // DO YOUR MAGIC
   const { id } = req.params;
   const changes = req.body;
 
   accounts.updateById(id, changes)
     .then(resp => {
-      res.status(201).json(resp);
+      res.status(200).json(resp);
     }).catch(next);
 });
 

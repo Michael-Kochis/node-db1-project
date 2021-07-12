@@ -4,7 +4,7 @@ exports.checkAccountPayload = (req, res, next) => {
   // DO YOUR MAGIC
   const neoAccount = req.body;
 
-  if (!neoAccount.name || !neoAccount.body) {
+  if (!neoAccount.name || !neoAccount.budget) {
     res.status(400).json({ message: "name and budget are required" })
   } else if (typeof(neoAccount.name) !== "string" ) {
     res.status(400).json({ message: "name of account must be a string" })
@@ -22,7 +22,11 @@ exports.checkAccountPayload = (req, res, next) => {
 
 exports.checkAccountNameUnique = (req, res, next) => {
   // DO YOUR MAGIC
-  const {name} = req.params;
+  const {name} = req.body;
+
+  if (!name || typeof(name) !== "string") {
+    next();
+  }
 
   accounts.getByName(name) 
     .then(resp => {

@@ -8,13 +8,13 @@ const getAll = () => {
 const getById = id => {
   // DO YOUR MAGIC
   return db('accounts')
-    .where( {id} )
+    .where( { id } )
     .first();
 }
 
-const getByName = name => {
+const getByName = (name) => {
   return db('accounts')
-    .where( {name} )
+    .where( { name } )
     .first();
 }
 
@@ -36,7 +36,7 @@ const updateById = (id, account) => {
 
 const deleteById = id => {
   // DO YOUR MAGIC
-  return db('posts')
+  return db('accounts')
     .where({ id })
     .del();
 }
